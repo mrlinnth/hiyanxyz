@@ -5,4 +5,4 @@ dateStart: "11/01/2022"
 dateEnd: "08/01/2024"
 ---
 
-Voluptatem est quaerat voluptas praesentium ipsa dolorem dignissimos nulla ratione distinctio quae maiores eligendi nostrum? Quibusdam, debitis voluptatum, lorem ipsum dolor. Sit amet consectetur adipisicing elit. Iure illo neque tempora.
+Led a team of developers in building and maintaining web applications and digital solutions. Responsible for project planning, technical architecture decisions, code reviews, and mentoring team members while ensuring timely delivery of quality software products.

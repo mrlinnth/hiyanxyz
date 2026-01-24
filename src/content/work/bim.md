@@ -5,4 +5,4 @@ dateStart: "09/01/2025"
 dateEnd: "Current"
 ---
 
-Sit amet consectetur adipisicing elit. Iure illo neque tempora, voluptatem est quaerat voluptas praesentium ipsa dolorem dignissimos nulla ratione distinctio quae maiores eligendi nostrum? Quibusdam, debitis voluptatum, lorem ipsum dolor.
+Leading a development team in designing and implementing software solutions. Managing project workflows, coordinating with stakeholders, and overseeing technical development to ensure alignment with business objectives and best practices.

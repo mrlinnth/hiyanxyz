@@ -1,5 +1,3 @@
-import defaultTheme from "tailwindcss/defaultTheme";
-
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
@@ -9,8 +7,25 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
-        serif: ["Lora", ...defaultTheme.fontFamily.serif],
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Oxygen",
+          "Ubuntu",
+          "Cantarell",
+          "Helvetica Neue",
+          "sans-serif",
+        ],
+        serif: [
+          "ui-serif",
+          "Georgia",
+          "Cambria",
+          "Times New Roman",
+          "Times",
+          "serif",
+        ],
       },
     },
   },
