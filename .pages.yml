@@ -1,0 +1,51 @@
+media:
+  input: public
+  output: /
+content:
+  - name: articles
+    label: Articles
+    type: collection
+    path: src/content/blog
+    view:
+      fields: [ title, date ]
+    fields:
+       - name: date
+         label: Date
+         type: date
+       - name: title
+         label: Title
+         type: string
+       - name: description
+         label: Description
+         type: string
+       - name: tags
+         label: Tags
+         type: string
+       - name: body
+         label: Body
+         type: rich-text
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    view:
+      fields: [ title, date ]
+    fields:
+       - name: date
+         label: Date
+         type: date
+       - name: title
+         label: Title
+         type: string
+       - name: description
+         label: Description
+         type: string
+       - name: demoURL
+         label: Demo
+         type: string
+       - name: repoURL
+         label: Repo
+         type: string
+       - name: body
+         label: Body
+         type: rich-text
