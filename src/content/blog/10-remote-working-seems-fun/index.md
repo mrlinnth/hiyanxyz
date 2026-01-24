@@ -1,21 +1,17 @@
 ---
 title: "Remote Working Seems Fun"
-description: "Reflecting on childhood daydreams about staying home and the reality of working from home."
-date: "Apr 4 2020"
+description: "ငယ်ငယ်တုန်းကတော့ ကျောင်းမသွားရပဲ အိမ်မှာနေရရင် တော်တော်ပျော်တာ။ ကြီးလာပြီး အလုပ်လုပ်ရတော့လည်း အလုပ်မလုပ်ပဲ အိမ်မှာနေရရင်ကောင်းမယ် ခဏခဏတွေးမိတယ်။ အခုလို တကယ်တမ်း အိမ်မှာပဲနေရပြီဆိုတဲ့ အခါကျမှ ... မနက်တိုင်းရုံးချိန်အမီရောက်အောင်ကြိုးစားရတာတွေ၊ ၁နာရီအောက်ထစ်ကြာတဲ့ အစည်းအဝေးတွေ၊…"
+date: "Apr 04 2020"
 ---
 
-As a child, I often dreamed about staying home instead of going to school. Now, as an adult, I've discovered that working from home comes with its own unexpected challenges.
+ငယ်ငယ်တုန်းကတော့ ကျောင်းမသွားရပဲ အိမ်မှာနေရရင် တော်တော်ပျော်တာ။ ကြီးလာပြီး အလုပ်လုပ်ရတော့လည်း အလုပ်မလုပ်ပဲ အိမ်မှာနေရရင်ကောင်းမယ် ခဏခဏတွေးမိတယ်။ အခုလို တကယ်တမ်း အိမ်မှာပဲနေရပြီဆိုတဲ့ အခါကျမှ ...
 
-Think about all those office frustrations we used to deal with:
+---
 
-- Missing morning commute deadlines
-- Sitting through lengthy meetings
-- Dealing with open-office dynamics
-- Cubicle frustrations
-- Crowded transit
-- Workplace interruptions
-- Mismatched office social circles
+မနက်တိုင်းရုံးချိန်အမီရောက်အောင်ကြိုးစားရတာတွေ၊ ၁နာရီအောက်ထစ်ကြာတဲ့ အစည်းအဝေးတွေ၊ open-space office ဒုက္ခတွေ၊ cubicle office ဒုက္ခတွေ၊ ရုံးဆင်းချိန် ဘတ်စ်ကား ရထားကျပ်တာတွေ၊ အလုပ်လုပ်လို့ကောင်းနေတုန်း ဘေးနားမှာ ဟိုဟာခိုင်း ဒီဟာမေးလုပ်တဲ့လူတွေ၊ ရုံးနားကစားသောက်ဆိုင်တွေက ကိုယ်နဲ့ဓါတ်မတွေ့တာတွေ။
 
-Now, with remote work becoming the reality many of us desired, the question is: does this arrangement prove satisfactory?
+ဒါတွေ အကုန်လွတ်ကင်းတဲ့ ကိုယ့်အိမ်ကပဲ ကိုယ့်အလုပ်တွေ ကိုယ်လုပ်ချင်ကြတဲ့ ကျွန်တော်တို့တွေ အခုလို တကယ်တမ်း လုပ်ကြရပြီ ဆိုတဲ့ အခါကျမှ ...
 
-What has been your experience with this newfound work-from-home existence?
+---
+
+အလွယ်လေးတွေးကြည့်ရင် ကိုယ့်အိမ် ကိုယ့်ယာမှာပဲ နေပြီး လုပ်စရာရှိတာလုပ်ပြီး ဝင်ငွေရှာနိုင်မယ်ဆိုတာ လူတိုင်း လိုချင်တဲ့ ဘဝတစ်ခုပါ။ အခုတော့ ဒီဘဝကြီးက အိပ်မက်မဟုတ်ပဲ တကယ်ဖြစ်လာပါပြီ။ ဘယ်လိုနေလဲ။ အဆင်ပြေကြလား။
