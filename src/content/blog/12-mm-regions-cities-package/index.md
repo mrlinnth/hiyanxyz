@@ -1,34 +1,34 @@
 ---
 title: "mm-regions-cities package"
-description: "ဒီတစ်ပတ်က mrlinnth/mm-regions-cities package တစ်ခုပဲ ကောင်းကောင်းလုပ်ဖြစ်တယ်ပြောရမယ်။"
+description: "ဒီတစ်ပတ်က mrlinnth/mm-regions-cities package တစ်ခုပဲ ကောင်းကောင်းလုပ်ဖြစ်တယ်ပြောရမယ်။ တစ်ခြားအလုပ်တွေက ဟိုထိ ဒီထိလောက်ပဲ။ ဘာကြောင့်လုပ်ဖြစ်လည်းလေး ရေးပြချင်လို့ပါ။ အဲဒီ package လုပ်ဖြစ်တော့မှ ကိုယ့်နိုင်ငံရဲ့ ပြည်နယ်နဲ့တိုင်းတွေဖွဲ့စည်းထားတာကိုလည်း…"
 date: "Apr 17 2020"
 ---
 
-ဒီတစ်ပတ်က mrlinnth/mm-regions-cities package တစ်ခုပဲ ကောင်းကောင်းလုပ်ဖြစ်တယ်ပြောရမယ်။ တစ်ခြားအလုပ်တွေက ဟိုထိ ဒီထိလောက်ပဲ။
+ဒီတစ်ပတ်က [mrlinnth/mm-regions-cities](https://github.com/mrlinnth/mm-regions-cities) package တစ်ခုပဲ ကောင်းကောင်းလုပ်ဖြစ်တယ်ပြောရမယ်။ တစ်ခြားအလုပ်တွေက ဟိုထိ ဒီထိလောက်ပဲ။ ဘာကြောင့်လုပ်ဖြစ်လည်းလေး ရေးပြချင်လို့ပါ။ အဲဒီ package လုပ်ဖြစ်တော့မှ ကိုယ့်နိုင်ငံရဲ့ ပြည်နယ်နဲ့တိုင်းတွေဖွဲ့စည်းထားတာကိုလည်း ပိုသိသွားတယ်။
 
-## Myanmar's Administrative Structure
+1. ပြည်ထောင်စုနယ်မြေ၊ တိုင်း၊ ပြည်နယ် (ကိုယ်ပိုင်အုပ်ချုပ်ခွင့်ရတဲ့ တိုင်းနဲ့ ဒေသ) တစ်ခုမှာ ခရိုင်တွေရှိတယ်။
+2. ခရိုင်တစ်ခုမှာ မြို့နယ်တွေ ရှိတယ်။
+3. မြို့နယ်တစ်ခုမှာ ရပ်ကွက် (သို့) ကျေးရွာအုပ်စုတွေ ရှိတယ်။
+4. ရပ်ကွက်ကို ထပ်ခွဲထားတာမရှိပေမယ့် ကျေးရွာအုပ်စုတစ်ခုမှာ ကျေးရွာတွေ ရှိတယ်။
 
-Myanmar has a hierarchical administrative structure:
-- Regions/States contain Districts
-- Districts contain Townships
-- Townships contain Wards or Village Groups
+![Myanmar Country Structural Hierarchy](https://yanlinnthor.github.io/media/posts/7/2020-04-Selection_005.png)
 
-## The Challenge
+*Ref : [https://en.wikipedia.org/wiki/Administrative_divisions_of_Myanmar](https://en.wikipedia.org/wiki/Administrative_divisions_of_Myanmar)*
 
-When developers create address forms, Myanmar's administrative structure differs from other countries. It uses **state → district → township** rather than **state → city**. This creates confusion for both users and programmers.
+ကျွန်တော် သိထားတာက မြို့ (city/town) က တစ်နေရာရာကနေ ပါမယ်ထင်တာ။ သို့သော်မပါဘူး။ မြို့နယ်ပဲရှိတယ်။ မြို့လို့ပြောလို့မရတဲ့ ကျေးရွာတွေရှိနေတာမို့လို့ မြို့နယ်အဆင့်နဲ့ပဲ ချုပ်ပြီးပြောလိုက်တာ ပိုမှန်တာပေါ့။ 
 
-## The Package
+ဒါပေမယ့် ဒီနေရာမှာ ပြဿနာလေးတစ်ခုက ကျွန်တော်တို့ website developer တွေ application programmer တွေအတွက်ပေါ်လာတယ်။ ကျွန်တော်တို့ မြင်ဖူးသုံးဖူးနေတဲ့ သိနေတဲ့ form တွေမှာ လိပ်စာအပိုင်းပါလာရင် ဖြည့်ခိုင်းတာက မြို့ (city) ပဲ။ အဆင့်ပိုမယ်ဆိုရင် တိုင်း/ပြည်နယ် (state) ပဲ။ ဒီဟာတွေဖြည့်တာမှာ ကိုယ့်ဟာနဲ့ကို keyboard က ရေးပြီး ဖြည့်ကြရင်တော့ ပြဿနာမကြီးပေမယ့် ရေးရတဲ့လူတွေလွယ်အောင် ကျွန်တော်တို့က dropdown box တွေနဲ့ လုပ်ပေးကြတာများတယ်။ (ရေးရတဲ့လူတွေကို လွယ်ကူအောင် လုပ်ပေးချင်တဲ့ ရည်ရွယ်ချက်ထက် ရေးချင်ရာတွေ လျှောက်မရေးကြအောင်လို့ dropdown list လုပ်ပေးထားတယ်ဆိုရင်လည်း ပိုမှန်တယ်၊ သို့သော် ဒီကိစ္စကို နောက်မှ ပိုစ့်သီးသန့်ထပ်ပြောပါဦးမယ်)
 
-The purpose of the [mm-regions-cities](https://github.com/mrlinnth/mm-regions-cities) package is to provide support for address forms where:
-- Selecting Myanmar as a country displays relevant states/regions
-- Selecting a state/region displays corresponding districts, cities, or townships
+ကြုံဖူးကြမှာပါ User Registration Form တို့ Online Shopping Payment Form တို့မှာ ကိုယ်နေထိုင်တဲ့ လိပ်စာအတွက်ဖြည့်မယ်ဆိုရင် Country, State, City, Address ဆိုတာမျိုး field တွေဖြည့်ရတာ။ Country, State နဲ့ City တွေကို dropdown list နဲ့ လုပ်ပေးထားကြတာများတယ်။ ဟိုးအရင်ကတော့ country ရွေးပြီး state ရွေးလည်း တကမ္ဘာလုံးက state တွေပြတယ်။ state ရွေးပြီး city ရွေးရင်လည်း တကမ္ဘာလုံးက city တွေပြတယ်။ ကိုယ့်ဟာကိုဖြည့်တဲ့လူက မှန်အောင်ရွေးဖြည့်ကြတယ်။ ခုနောက်ပိုင်းမှာတော့ ဖြည့်တဲ့လူတွေအတွက် လွယ်အောင် အရင်ဆုံး ကိုယ်နေတဲ့ country ကိုရွေးလိုက်ရင် state ရှိတဲ့ နိုင်ငံဆို တစ်ခါတည်း state dropdown မှာပြတဲ့ list က ဒီ country မှာရှိတဲ့ states တွေပဲ ပြတော့တယ်။ State မရှိတဲ့ Country ဖြစ်ဲ့ရင်လည်း state dropdown က နှိပ်စရာမလိုတာမျိုး ဖြစ်သွားတယ်။ ထိုနည်းတူပဲ state တစ်ခုရွေးလိုက်ပြီးရင်လည်း နောက်ကရွေးရမယ့် city dropdown မှာက ဒီ state ထဲမှာရှိတဲ့ city တွေပဲ ပြပေးတယ်။ သုံးရတဲ့လူတွေအဖို့ အများကြီးတွေထဲကရွေးရတဲ့ ဒုက္ခတို့ စာအများကြီး ရိုက်ရတဲ့ အခက်အခဲတို့ မရှိတော့ဘူးပေါ့။
 
-## Version 0.1.0
+အပေါ်မှာပြောခဲ့တဲ့ ကျွန်တော်တို့ programmer တွေအတွက် ပြဿနာဆိုတာက မြန်မာနိုင်ငံအတွက် address တွေကို အပေါ်ကလို form နဲ့ ဖြည့်ခိုင်းရင် တစ်ခြားနိုင်ငံတွေလိုမျိုး အဆင်မပြေတဲ့ ပြဿနာ။ State > District > Township ဆိုပြီး structure ချထားတာမို့ တစ်ခြားနိုင်ငံတွေကလို State > City ဆိုပြီး လိုက်လုပ်တော့ အဆင်မပြေတော့ဘူး။ သို့သော် ဒါတွေက ကျွန်တော်တို့ code ရေးသူတွေက state တွေ district တွေ township တွေကိုစုစည်းပြီးချိတ်ဆက်ပြီး မှန်အောင် ပြပေးရင် ရတယ်။ ၃ဆင့်ဖြစ်သွားတာက ပြဿနာမဟုတ်ဘူး။ပြဿနာသည်
 
-The initial version includes only state/region and city data via REST API.
+1. လူအများက state နဲ့ city ကိုပဲ ရင်းနှီးနေပြီး သူတို့ကလည်း state နဲ့ city လောက်ပဲ ဖြည့်ချင်တာ။ မြို့နယ်ဆိုရင်တောင် တစ်ချို့ မသိချင်ကြတော့ဘူး။ ကိုယ်နေထိုင်ရာ လိပ်စာမျိုးကိုတော့ သိကြမှာမှာ သို့သော် တစ်ခြားတစ်နေရာ တစ်ပါးသူအတွက် လိပ်စာကိုဖြည့်ပေးရမယ်ဆို ဂဃဏန သိပ်မသိတော့ဘူး။ နေထိုင်တဲ့ မြို့လောက်ပဲသိရင်သိတော့မယ်။
+2. မြို့မှာမနေထိုင်ကြသူများအတွက် လိပ်စာဖြည့်မယ်ဆိုရင် သူတို့ကြတော့ city ဆိုတာကို သူတို့လိပ်စာမှာ မရှိနေတာ။ မြို့နယ် ကျေးရွာပါမှပဲ သူတို့ဖြည့်လို့ကိုရမှာ။ မြို့မှာ မနေကြလို့ အင်တာနက်မသုံး online က ဘာမှ မလုပ်နိုင်ကြဘူးလို့ တွက်ဆရင်လည်း မှားတယ်။
+3. Programmer တွေက state, district, township တွေကို စုစည်းပြီး ပြနိုင်သော်ငြား ထို အချက်အလက်များကို မှန်မှန်ကန်ကန် ပြည့်ပြည့်စုံစုံ ရရှိနိုင်မယ့်နေရာကို မသိကြ။ ကိုယ်တွေရှာနေကြ wikipedia တို့ stackoverflow မှာ မရှိ။ Wikipedia မှာတောင် state, district လောက်ထိ စုံစုံလင်လင်ရှိပေမယ့် township တွေက စုံလင်လားဘာလား မသေချာ။
 
-### Future Plans
-- Expand to include districts and townships
-- Develop Vue.js components
+ဒီတော့ ကျွန်တော်တို့ လုပ်ရမှာကတော့ တစ်ခြားနိုင်ငံတွေလို state ထဲမှာ city ရှိတယ်ဆိုတာမဟုတ်ပဲ state မှာ district တွေရှိပြီး district မှာ township တွေရှိတာမို့လို့ state နဲ့ city ဖြည့်ခိုင်းမယ့်အစား  state နဲ့ township ဖြည့်ခိုင်းရင် ပိုမှန်တယ်။ district တို့ city တို့ ကိုတော့ ထည့်လည်းရ မထည့်လည်းရတယ်။ ထည့်ထားရင်တော့ ကျစ်ကျစ်လစ်လစ် ပိုပြနိုင်မှာပေါ့။ State နဲ့ township ပဲ ဖြည့်ရမယ်ဆိုရင်တော့ ရန်ကုန်တိုင်း (Yangon State/Region) ရွေးလိုက်တာနဲ့ သူ့မှာရှိသမျှ township အကုန်ပြပြီး အဲထဲက ပဲ မှန်တာပြန်ရွေးရမှာပေါ့။ District တို့ City တို့ ရွေးဖို့ ပေးထားရင်တော့ ပြမယ့် township က ရွေးထားတဲ့ district, city တွေနဲ့ သက်ဆိုင်တာလောက်ပဲ ထုတ်ပြတာမျိုး ဖြစ်တော့နည်းမှာပေါ့။ သို့သော်လည်း လူတွေသည် အများကြီး ဖြည့်ရ နှိပ်ရရင်လည်း သိပ်မကြိုက်ကြပြန်ဘူး။ ဒီတော့ ရင်းနှီးပြီးသား state ရွေး၊ ပြီးရင် city ရွေးအစား state ရွေး township ရွေးလောက်ဆိုရင်ကိုပဲ အဆင်ပြေလောက်ပါပြီ။
 
-Data is available in Excel (CSV) and JSON formats.
+Address form မှာ ဘာတွေ ဖြည့်ခိုင်းရင် အဆင်ပြေမလဲကတော့ ဟုတ်ပြီ။ ဖြည့်ဖို့ ရွေးရမယ့် ခရိုင် (district) တွေနဲ့ မြို့နယ် (township) တွေ ပဲ ဘယ်ကဘယ်လိုရမလဲ ကျန်တော့တယ်။ Wikipedia မှာတော့ [Districts of Myanmar](https://en.wikipedia.org/wiki/Districts_of_Myanmar) ဆိုပြီး ပြထားတာရှိတယ်။ ဘယ်လောက် မှန်မလဲ ပြည့်စုံမလဲကတော့ ကျွန်တော်မသိ။ သို့သော်လည်း ဘာမှမသိတာ မရှိတာထက်တော့ ရှိတာတစ်ခုခုနဲ့ စလုပ်ရမှာပဲ။  Project တွေလုပ်နေတာမှာ address ဖြည့်ခိုင်းတဲ့ form ပါတဲ့ project က တစ်ခုမကတော့ဘူး။ အဲတာနဲ့ပဲ mm-regions-cities package ကိုလုပ်ဖြစ်တာ။ ရည်ရွယ်ချက်ကတော့ address form တစ်ခုမှာ Country မြန်မာရွေးလိုက်ရင်၊ သက်ဆိုင်ရာ State/Region တွေပြပေးနိုင်ဖို့၊ State/Region တစ်ခုရွေးလိုက်ရင် သက်ဆိုင်ရာ District သို့ City သို့ Township တွေပြပေးနိုင်ဖို့အတွက်  အထောက်အပံ့ပေးဖို့ပါ။ (ကျေးရွာ village အထိသွားနိုင်ရင်တော့ အရမ်းကောင်းမှာပေါ့လေ သို့သော်လည်း သတင်းအချက်အလက်က အဲလောက်ထိ ပြည့်ပြည့်စုံစုံရဖို့ဆိုရင်တော့ လွယ်မယ်မထင်လို့ မစဥ်းစားသေးဘူး။)
+
+ဒီအပတ်ထဲမှာ လုပ်ပြီး release လိုက်တဲ့ version 0.1.0 မှာကတော့ State/Region နဲ့ Cities တွေပဲ ပါသေးတယ်။ State list, city list တွေကို json ထုတ်ပေးတဲ့ REST API အဆင့်ပဲရှိသေးတယ်။ အသင့်တန်းသုံးလို့ရမယ့် dropdown အဆင့်ထိ မလုပ်ပေးရသေးဘူး။ ကိုယ်က vuejs သမားဆိုတော့ အနည်းဆုံး vuejs component လေးတွေလောက်ထိ လုပ်ပေးဖို့တော့ ရည်ရွယ်ထားတယ်။ ရှာဖွေစုစည်းထားတဲ့ အချက်အလက်တွေကိုတော့ လွယ်လွယ်ကူကူယူပြီး သုံးချင်ရင်သုံးလို့ရအောင် Excel (csv) file နဲ့ JSON files တွေထည့်ပေးထားတယ်။ District နဲ့ township တွေ မပါသေးဘူး။ Covid19 isolation လုပ်နေတဲ့ ကာလမှာ အဲတာတွေပါ အပြည့်အစုံပါအောင် လုပ်သွားနိုင်ဖို့တော့ ကြိုးစားသွားပါမယ်။
