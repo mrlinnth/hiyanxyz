@@ -1,4 +1,5 @@
 ---
+date: 2026-02-10
 title: A Guide to Free Transactional Email for Developers
 description: When building web applications, sending automated emails is
   inevitable. Whether it's a password reset, order confirmation, or contact form
