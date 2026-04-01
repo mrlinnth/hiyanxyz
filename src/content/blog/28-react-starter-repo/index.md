@@ -1,11 +1,11 @@
 ---
 date: 2026-04-01
-title: index
+title: React Starter
 description: A full-stack React template built on TanStack Start. Fork it,
   configure your API URL, and you have auth, routing, data fetching, state
   management, and a component library already connected and working together
 ---
-# React Starter: A Practical Foundation for Real Projects
+# A Practical Foundation for Real Projects
 
 Every React project starts the same way. You run `create vite@latest`, pick your options, and then spend the next two hours wiring up routing, state management, data fetching, and authentication before you write a single line of actual business logic. If you have done this more than once, you already know the pain.
 
