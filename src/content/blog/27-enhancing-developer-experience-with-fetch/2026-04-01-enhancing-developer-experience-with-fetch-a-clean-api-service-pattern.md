@@ -1,6 +1,6 @@
 ---
 date: 2026-04-01
-title: "Enhancing Developer Experience with Fetch: A Clean API Service Pattern"
+title: Enhancing Developer Experience with Fetch
 description: A simple yet effective pattern that wraps `fetch` into a clean,
   reusable API service layer. With just two files – a helper module and a
   service module – you can dramatically improve developer experience, reduce
@@ -15,11 +15,8 @@ In this post, I’ll show you a simple yet effective pattern that wraps `fetch` 
 Imagine you’re building an e‑commerce frontend. You need to fetch categories, brands, slides, and products. Each call requires:
 
 - A base URL (e.g., `https://api.example.com`)
-
 - Authentication headers (e.g., a Bearer token)
-
 - The `Accept` and `Content-Type` headers
-
 - Query string building for parameters
 
 Without a structured approach, your code might look like this:
@@ -105,9 +102,7 @@ export const buildUrl = (url: string, params?: any) => {
 ```
 
 - *`API_BASEURL`** reads the base URL from environment variables – a single source of truth.
-
 - *`buildRequest`** creates a standard `RequestInit` object with the common headers, method, and optionally a JSON‑stringified body. The token is also injected automatically.
-
 - *`buildUrl`** concatenates the base URL with the endpoint and appends query parameters using `URLSearchParams`.
 
 Now, every API call can reuse these helpers. No more repeating the same headers or manually building query strings.
@@ -193,9 +188,7 @@ export const ApiService = {
 Each function:
 
 - Calls `buildRequest` with the correct HTTP method.
-
 - Calls `buildUrl` with the endpoint and any optional query parameters.
-
 - Executes `fetch` and returns the parsed JSON.
 
 Finally, we export an object `ApiService` that holds all these functions. This gives us a single, clean API to import anywhere in the app.
@@ -251,11 +244,8 @@ The code reads like a contract: `ApiService.getCategories()` – you immediately
 The pattern above is a great starting point, but you can extend it even more:
 
 - **Add request/response interceptors** to handle loading states or authentication refresh.
-
 - **Include error handling** – wrap the `fetch` call in a try‑catch and throw a custom error with status codes.
-
 - **Support other HTTP methods** like `POST`, `PUT`, `DELETE` by passing a payload to `buildRequest`.
-
 - **Use AbortController** to cancel in‑flight requests when components unmount.
 
 ## Conclusion
