@@ -2,6 +2,7 @@
 title: "The Best Is The Enemy Of The Good"
 description: "Dans ses écrits, un sage Italien Dit que le mieux est l'ennemi du bien. -…"
 date: "Apr 05 2020"
+tags: thoughts, essay
 ---
 
 > Dans ses écrits, un sage ItalienDit que le mieux est l'ennemi du bien.-  Voltaire (La Bégueule)

@@ -2,6 +2,7 @@
 title: "2025 Dev Setup - Revised"
 description: "Debian 13 with KDE Plasma 6 Install base distro Download and install distro iso Download…"
 date: "Aug 10 2025"
+tags: guide, developer, debian, linux, kde
 ---
 
 # Debian 13 with KDE Plasma 6

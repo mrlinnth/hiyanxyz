@@ -3,6 +3,7 @@ title: "Website Development Lifecycle"
 description: "A comprehensive guide through the 10 phases of building successful websites, from discovery to ongoing maintenance."
 date: "Jan 25 2026"
 draft: false
+tags: guide, project-manager, developer
 ---
 
 Building a successful website requires a structured approach. The website development lifecycle encompasses 10 distinct phases, each critical to delivering a product that meets business objectives, user needs, and technical standards.

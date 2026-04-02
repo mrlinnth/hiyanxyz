@@ -2,6 +2,7 @@
 date: 2026-04-01
 title: Enhancing Developer Experience with Fetch
 description: A simple yet effective pattern that wraps `fetch` into a clean, reusable API service layer. With just two files – a helper module and a service module – you can dramatically improve developer experience, reduce bugs, and make your API calls declarative and consistent.
+tags: developer, guide, frontend, api
 ---
 
 # Enhancing Developer Experience with Fetch: A Clean API Service Pattern

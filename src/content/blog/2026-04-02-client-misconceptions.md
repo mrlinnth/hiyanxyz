@@ -2,6 +2,7 @@
 date: 2026-03-17
 title: "Client Misconceptions "
 description: A Field Guide for Those Who Must Explain the Unexplainable
+tags: sale, project-manager, developer
 ---
 # Common Client Misconceptions About Web Development
 

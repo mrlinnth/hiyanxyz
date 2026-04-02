@@ -2,6 +2,7 @@
 title: "10 is becoming better but I still prefer my Mint"
 description: "Windows 10 is definitely becoming better in recent years. Can't deny that. I still found…"
 date: "Oct 16 2020"
+tags: linux, windows, thoughts
 ---
 
 Windows 10 is definitely becoming better in recent years. Can't deny that. I still found Linux Mint better for development and more beautiful. On a decent hardware, the performance of the two has little difference. Decent means using SSD and RAM 16GB haha. On a not so decent hardware, I am sure Mint will perform way better and smoother. 

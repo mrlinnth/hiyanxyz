@@ -6,6 +6,7 @@ description: When building web applications, sending automated emails is
   notification, you need a reliable way to deliver these messages to your users'
   inboxes. While it might be tempting to use your personal Gmail account, there
   are better options designed specifically for this purpose.
+tags: guide, developer, backend
 ---
 ## Introduction
 

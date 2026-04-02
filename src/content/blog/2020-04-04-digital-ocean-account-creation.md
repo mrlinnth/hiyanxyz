@@ -2,6 +2,7 @@
 title: "Digital Ocean Account Creation"
 description: "Just a simple guide to assist non-tech people. 1. Register at - DigitalOcean - The…"
 date: "Apr 04 2020"
+tags: guide, developer
 ---
 
 *Just a simple guide to assist non-tech people.*

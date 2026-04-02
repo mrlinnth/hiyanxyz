@@ -3,6 +3,7 @@ date: 2026-03-10
 title: "Local development environment for php and laravel applications "
 description: This guide will walk you through setting up a professional local
   development environment for PHP and Laravel projects.
+tags: guide, developer, php, laravel, backend
 ---
 ## Introduction
 

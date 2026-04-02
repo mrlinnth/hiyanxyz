@@ -2,6 +2,7 @@
 date: 2026-03-31
 title: E-commerce Client Questionnaire
 description: What to Ask Before Scoping a Project
+tags: guide, project-manager, sale
 ---
 Before you can estimate timeline, budget, or recommend a solution for an e-commerce project, you need to understand what the client actually needs. This questionnaire helps you gather the right information during initial client conversations.
 

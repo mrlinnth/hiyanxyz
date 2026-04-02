@@ -2,6 +2,7 @@
 title: "2025 Development Setup"
 description: "OS (POP) cleanup and update sudo apt remove -purge libreoffice* sudo apt autoremove sudo apt…"
 date: "Aug 02 2025"
+tags: guide, developer, linux, php
 ---
 
 ## OS (POP)

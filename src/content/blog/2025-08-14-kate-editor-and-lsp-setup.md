@@ -2,6 +2,7 @@
 title: "Kate Editor and LSP setup"
 description: "After switching to Debian with KDE plasma, I tried Kate, KDE's default text editor. It…"
 date: "Aug 14 2025"
+tags: guide, developer, editor, kde, linux
 ---
 
 After switching to Debian with KDE plasma, I tried Kate, KDE's default text editor. It has all the necessary features for a modern day text editor. I am not gonna talk about KDE's features or it's benefits. Visit their website to learn more about it or search online to know more. [https://kate-editor.org/](https://kate-editor.org/)

@@ -2,6 +2,7 @@
 title: "Using Laravel Filament"
 description: "If you just wish to learn about Filament, please read their documentation and check their…"
 date: "Sep 29 2022"
+tags: laravel, guide, backend, php
 ---
 
 <h1 id="mcetoc_1ge8sgjjv1r3"></h1>
