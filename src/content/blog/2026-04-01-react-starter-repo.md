@@ -4,6 +4,7 @@ title: React Starter
 description: A full-stack React template built on TanStack Start. Fork it,
   configure your API URL, and you have auth, routing, data fetching, state
   management, and a component library already connected and working together
+tags: developer, frontend, react, template
 ---
 # A Practical Foundation for Real Projects
 
