@@ -1,6 +1,6 @@
 ---
-company: "BIM"
-role: "Team Lead"
+company: "BIM ATS"
+role: "Senior Application Consultant"
 dateStart: "09/01/2025"
 dateEnd: "Current"
 ---
