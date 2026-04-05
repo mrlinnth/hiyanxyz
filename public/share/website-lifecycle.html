@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Development Lifecycle - Interactive Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0a0a0f;
+            --color-surface: #1a1a24;
+            --color-surface-hover: #252534;
+            --color-primary: #00ff87;
+            --color-secondary: #ff3366;
+            --color-accent: #ffaa00;
+            --color-text: #e8e8f0;
+            --color-text-dim: #9898a8;
+            --color-border: #2a2a38;
+            --font-display: 'Fraunces', serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-mono);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 135, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 80% 80%, rgba(255, 51, 102, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 40% 20%, rgba(255, 170, 0, 0.06) 0%, transparent 25%);
+            animation: drift 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(5%, -5%) rotate(2deg); }
+            66% { transform: translate(-5%, 5%) rotate(-2deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            padding: 4rem 0 3rem;
+            text-align: center;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 4rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--color-text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-card:hover {
+            background: var(--color-surface-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 255, 135, 0.1);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--color-text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .phase-timeline {
+            position: relative;
+            margin: 4rem 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, 
+                var(--color-primary) 0%, 
+                var(--color-secondary) 50%, 
+                var(--color-accent) 100%);
+            transform: translateX(-50%);
+        }
+
+        .phase-item {
+            position: relative;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.6s ease-out backwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .phase-item:nth-child(1) { animation-delay: 0.1s; }
+        .phase-item:nth-child(2) { animation-delay: 0.2s; }
+        .phase-item:nth-child(3) { animation-delay: 0.3s; }
+        .phase-item:nth-child(4) { animation-delay: 0.4s; }
+        .phase-item:nth-child(5) { animation-delay: 0.5s; }
+        .phase-item:nth-child(6) { animation-delay: 0.6s; }
+        .phase-item:nth-child(7) { animation-delay: 0.7s; }
+        .phase-item:nth-child(8) { animation-delay: 0.8s; }
+        .phase-item:nth-child(9) { animation-delay: 0.9s; }
+        .phase-item:nth-child(10) { animation-delay: 1s; }
+
+        .phase-content {
+            width: calc(50% - 3rem);
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .phase-item:nth-child(odd) .phase-content {
+            margin-left: auto;
+            margin-right: 3rem;
+        }
+
+        .phase-item:nth-child(even) .phase-content {
+            margin-left: 3rem;
+        }
+
+        .phase-content:hover {
+            background: var(--color-surface-hover);
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(0, 255, 135, 0.15);
+        }
+
+        .phase-dot {
+            position: absolute;
+            top: 2rem;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 8px var(--color-bg), 0 0 20px var(--color-primary);
+            transition: all 0.3s ease;
+        }
+
+        .phase-item:hover .phase-dot {
+            transform: translateX(-50%) scale(1.5);
+            box-shadow: 0 0 0 8px var(--color-bg), 0 0 30px var(--color-primary);
+        }
+
+        .phase-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background: var(--color-primary);
+            color: var(--color-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0, 255, 135, 0.4);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .phase-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            flex: 1;
+        }
+
+        .phase-duration {
+            font-size: 0.85rem;
+            color: var(--color-text-dim);
+            background: rgba(0, 255, 135, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .phase-description {
+            font-size: 0.95rem;
+            color: var(--color-text-dim);
+            margin-bottom: 1rem;
+        }
+
+        .phase-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .phase-content:hover .phase-toggle {
+            gap: 1rem;
+        }
+
+        .phase-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .phase-details.expanded {
+            max-height: 2000px;
+        }
+
+        .phase-details-content {
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-border);
+            margin-top: 1.5rem;
+        }
+
+        .deliverables {
+            margin-top: 1rem;
+        }
+
+        .deliverables h4 {
+            font-size: 0.9rem;
+            color: var(--color-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .deliverables ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .deliverables li {
+            font-size: 0.9rem;
+            color: var(--color-text-dim);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .deliverables li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+        }
+
+        .key-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .key-point {
+            background: rgba(0, 255, 135, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--color-primary);
+            font-size: 0.9rem;
+        }
+
+        .warning-section {
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.1), rgba(255, 170, 0, 0.1));
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 51, 102, 0.3);
+            margin: 4rem 0;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .warning-section h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .red-flags {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .flag-card {
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--color-secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .flag-card:hover {
+            transform: translateX(10px);
+        }
+
+        .flag-card h3 {
+            font-size: 1.1rem;
+            color: var(--color-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .flag-card p {
+            font-size: 0.9rem;
+            color: var(--color-text-dim);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--color-border);
+            color: var(--color-text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .timeline-line {
+                left: 2rem;
+            }
+
+            .phase-item:nth-child(odd) .phase-content,
+            .phase-item:nth-child(even) .phase-content {
+                width: calc(100% - 5rem);
+                margin-left: 5rem;
+                margin-right: 0;
+            }
+
+            .phase-dot {
+                left: 2rem;
+            }
+
+            .key-points {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .phase-content {
+                padding: 1.5rem;
+            }
+
+            .phase-title {
+                font-size: 1.2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom cursor effect */
+        @media (hover: hover) {
+            .phase-content::after {
+                content: '';
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                background: radial-gradient(circle, rgba(0, 255, 135, 0.15), transparent);
+                border-radius: 50%;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                transform: translate(-50%, -50%);
+            }
+
+            .phase-content:hover::after {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Website Development Lifecycle</h1>
+            <p class="subtitle">A comprehensive, interactive guide to building successful web projects from concept to launch and beyond</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">10</span>
+                <span class="stat-label">Project Phases</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">20-40</span>
+                <span class="stat-label">Weeks Timeline</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">30%</span>
+                <span class="stat-label">Buffer Required</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">#1</span>
+                <span class="stat-label">Delay: Content</span>
+            </div>
+        </div>
+
+        <div class="phase-timeline">
+            <div class="timeline-line"></div>
+
+            <!-- Phase 0 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">0</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Qualification & Proposal</h2>
+                        <span class="phase-duration">Week 0-1 • 5%</span>
+                    </div>
+                    <p class="phase-description">Project viability assessment, client consultation, and contract negotiation</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Initial Consultation</strong><br>
+                                    Understanding client needs and business objectives
+                                </div>
+                                <div class="key-point">
+                                    <strong>Qualification</strong><br>
+                                    Budget feasibility, timeline realism, risk assessment
+                                </div>
+                                <div class="key-point">
+                                    <strong>Red Flag Check</strong><br>
+                                    Identify potential project dealbreakers early
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Project proposal with detailed scope</li>
+                                    <li>Statement of work (SOW)</li>
+                                    <li>Signed contract with clear terms</li>
+                                    <li>Risk assessment document</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 1 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">1</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Discovery & Strategy</h2>
+                        <span class="phase-duration">Weeks 1-3 • 10-15%</span>
+                    </div>
+                    <p class="phase-description">Foundation setting through stakeholder interviews, competitive analysis, and strategic planning</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Stakeholder Interviews</strong><br>
+                                    Define business goals and target audience
+                                </div>
+                                <div class="key-point">
+                                    <strong>Content Strategy</strong><br>
+                                    Plan content creation workflow and timeline
+                                </div>
+                                <div class="key-point">
+                                    <strong>Competitive Analysis</strong><br>
+                                    Identify opportunities for differentiation
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Project brief and stakeholder goals document</li>
+                                    <li>Buyer personas (2-5 detailed profiles)</li>
+                                    <li>Competitive analysis report</li>
+                                    <li>KPI framework with measurement plan</li>
+                                    <li>Content strategy and production timeline</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">2</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Planning & Architecture</h2>
+                        <span class="phase-duration">Weeks 3-5 • 10-15%</span>
+                    </div>
+                    <p class="phase-description">Technical stack selection, information architecture, and infrastructure planning</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Technology Stack</strong><br>
+                                    Choose framework, CMS, hosting, and tools
+                                </div>
+                                <div class="key-point">
+                                    <strong>Security Planning</strong><br>
+                                    SSL, authentication, data protection strategy
+                                </div>
+                                <div class="key-point">
+                                    <strong>Performance Budgets</strong><br>
+                                    Set measurable Core Web Vitals targets
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Technical specifications document</li>
+                                    <li>Visual sitemap and user flow diagrams</li>
+                                    <li>Security requirements checklist</li>
+                                    <li>Performance budget document</li>
+                                    <li>URL structure and content taxonomy</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">3</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Design & Prototyping</h2>
+                        <span class="phase-duration">Weeks 5-10 • 20-25%</span>
+                    </div>
+                    <p class="phase-description">Visual design direction, wireframing, and high-fidelity mockups with accessibility built-in</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Design System</strong><br>
+                                    Colors, typography, components, spacing
+                                </div>
+                                <div class="key-point">
+                                    <strong>Wireframing</strong><br>
+                                    Low-fidelity layouts and user flow testing
+                                </div>
+                                <div class="key-point">
+                                    <strong>Accessibility First</strong><br>
+                                    WCAG 2.1 AA compliance from design phase
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Design system and style guide</li>
+                                    <li>Wireframes for all page templates</li>
+                                    <li>Interactive prototypes</li>
+                                    <li>High-fidelity mockups (all responsive states)</li>
+                                    <li>Component library with all states</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">4</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Content Creation</h2>
+                        <span class="phase-duration">Weeks 8-12 • 15-20%</span>
+                    </div>
+                    <p class="phase-description">The #1 cause of delays - copywriting, photography, and content assembly</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Copywriting</strong><br>
+                                    All page copy, CTAs, and microcopy
+                                </div>
+                                <div class="key-point">
+                                    <strong>Visual Assets</strong><br>
+                                    Photography, illustrations, video production
+                                </div>
+                                <div class="key-point">
+                                    <strong>Critical Deadline</strong><br>
+                                    80% ready before design ends, 100% before dev
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>All finalized copy in organized format</li>
+                                    <li>Optimized visual assets with alt text</li>
+                                    <li>Metadata spreadsheet (titles, descriptions)</li>
+                                    <li>Content approval documentation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 5 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">5</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Development & Coding</h2>
+                        <span class="phase-duration">Weeks 10-18 • 25-30%</span>
+                    </div>
+                    <p class="phase-description">Frontend and backend development with security-first and performance-first approach</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Environment Setup</strong><br>
+                                    CI/CD pipeline, version control, testing
+                                </div>
+                                <div class="key-point">
+                                    <strong>Frontend Dev</strong><br>
+                                    Semantic HTML, accessibility, performance
+                                </div>
+                                <div class="key-point">
+                                    <strong>Backend Dev</strong><br>
+                                    API, database, security implementation
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Fully responsive frontend templates</li>
+                                    <li>Backend with security implementation</li>
+                                    <li>Component library and documentation</li>
+                                    <li>Unit and integration test suite</li>
+                                    <li>CMS configured and tested</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 6 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">6</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Testing & QA</h2>
+                        <span class="phase-duration">Weeks 18-21 • 10-15%</span>
+                    </div>
+                    <p class="phase-description">Comprehensive testing: functional, performance, accessibility, security, and UAT</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Cross-Browser Testing</strong><br>
+                                    Desktop, mobile, tablet - all major browsers
+                                </div>
+                                <div class="key-point">
+                                    <strong>Performance Audit</strong><br>
+                                    Core Web Vitals, load time, optimization
+                                </div>
+                                <div class="key-point">
+                                    <strong>Security Testing</strong><br>
+                                    Vulnerability scanning, penetration testing
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Functional test report with bug log</li>
+                                    <li>Performance audit report</li>
+                                    <li>Accessibility audit (WCAG compliance)</li>
+                                    <li>Security audit report</li>
+                                    <li>UAT feedback and final sign-off</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 7 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">7</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Training & Handoff</h2>
+                        <span class="phase-duration">Weeks 21-22 • 3-5%</span>
+                    </div>
+                    <p class="phase-description">Client training, documentation handoff, and support agreement establishment</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>CMS Training</strong><br>
+                                    Hands-on sessions with recorded tutorials
+                                </div>
+                                <div class="key-point">
+                                    <strong>Documentation</strong><br>
+                                    Admin guides, troubleshooting, maintenance
+                                </div>
+                                <div class="key-point">
+                                    <strong>Support SLA</strong><br>
+                                    Response times, scope, communication channels
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Training videos and materials</li>
+                                    <li>Complete admin documentation</li>
+                                    <li>Support agreement and SLA</li>
+                                    <li>Maintenance plan</li>
+                                    <li>30/60/90 day check-in schedule</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 8 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">8</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Launch & Deployment</h2>
+                        <span class="phase-duration">Week 22 • 2-3%</span>
+                    </div>
+                    <p class="phase-description">Final deployment with monitoring, verification, and immediate issue resolution</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Pre-Launch Checklist</strong><br>
+                                    48-hour verification of all systems
+                                </div>
+                                <div class="key-point">
+                                    <strong>Deployment Strategy</strong><br>
+                                    Direct, phased, or gradual rollout
+                                </div>
+                                <div class="key-point">
+                                    <strong>Real-Time Monitoring</strong><br>
+                                    Error logs, analytics, server performance
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Live website with all functionality working</li>
+                                    <li>Launch checklist completed</li>
+                                    <li>Monitoring dashboard configured</li>
+                                    <li>Post-launch verification report</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 9 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">9</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Post-Launch Monitoring</h2>
+                        <span class="phase-duration">Weeks 22-26 • 5%</span>
+                    </div>
+                    <p class="phase-description">Intensive monitoring for the critical first 30 days after launch</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Daily Monitoring</strong><br>
+                                    Error logs, performance, user feedback
+                                </div>
+                                <div class="key-point">
+                                    <strong>Hot Fixes</strong><br>
+                                    Rapid response to critical issues
+                                </div>
+                                <div class="key-point">
+                                    <strong>30-Day Review</strong><br>
+                                    Performance vs. benchmarks analysis
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Daily/weekly monitoring reports</li>
+                                    <li>30-day performance report</li>
+                                    <li>Optimization recommendations</li>
+                                    <li>Lessons learned document</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 10 -->
+            <div class="phase-item">
+                <div class="phase-dot"></div>
+                <div class="phase-content" onclick="togglePhase(this)">
+                    <div class="phase-number">10</div>
+                    <div class="phase-header">
+                        <h2 class="phase-title">Maintenance & Optimization</h2>
+                        <span class="phase-duration">Ongoing</span>
+                    </div>
+                    <p class="phase-description">Continuous improvement through data analysis, A/B testing, and iterative enhancements</p>
+                    <div class="phase-toggle">
+                        <span>Expand Details</span>
+                        <span>↓</span>
+                    </div>
+                    <div class="phase-details">
+                        <div class="phase-details-content">
+                            <div class="key-points">
+                                <div class="key-point">
+                                    <strong>Regular Maintenance</strong><br>
+                                    Security updates, backups, performance checks
+                                </div>
+                                <div class="key-point">
+                                    <strong>Data-Driven Optimization</strong><br>
+                                    Analytics analysis, A/B testing, UX improvements
+                                </div>
+                                <div class="key-point">
+                                    <strong>Feature Enhancement</strong><br>
+                                    Iterative improvements based on feedback
+                                </div>
+                            </div>
+                            <div class="deliverables">
+                                <h4>Key Deliverables</h4>
+                                <ul>
+                                    <li>Monthly maintenance reports</li>
+                                    <li>Quarterly optimization reports</li>
+                                    <li>Feature enhancement roadmap</li>
+                                    <li>User feedback analysis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="warning-section scroll-reveal">
+            <h2>⚠️ Warning Signs & Red Flags</h2>
+            <p style="color: var(--color-text-dim); margin-bottom: 2rem;">
+                Watch out for these project dealbreakers that signal trouble ahead
+            </p>
+            <div class="red-flags">
+                <div class="flag-card">
+                    <h3>Content Delays</h3>
+                    <p>Client cannot provide content timeline or repeatedly misses deadlines. This is the #1 project killer.</p>
+                </div>
+                <div class="flag-card">
+                    <h3>Scope Creep</h3>
+                    <p>Frequent "small" additions without timeline adjustments. "While we're at it, can we also..."</p>
+                </div>
+                <div class="flag-card">
+                    <h3>Budget Mismatch</h3>
+                    <p>Client expects enterprise results with small-site budget. Unrealistic cost expectations.</p>
+                </div>
+                <div class="flag-card">
+                    <h3>Decision Chaos</h3>
+                    <p>Unclear approval authority, design by committee, or decision-maker unavailable for meetings.</p>
+                </div>
+                <div class="flag-card">
+                    <h3>Skip Planning Phase</h3>
+                    <p>"Can we just start designing?" indicates lack of strategic thinking and will cause rework.</p>
+                </div>
+                <div class="flag-card">
+                    <h3>Communication Breakdown</h3>
+                    <p>Slow responses, missed meetings, or stakeholders bypassing project lead.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Website Development Lifecycle Guide • Interactive Infographic</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Click on any phase to expand details and explore deliverables</p>
+        </footer>
+    </div>
+
+    <script>
+        function togglePhase(element) {
+            const details = element.querySelector('.phase-details');
+            const toggle = element.querySelector('.phase-toggle span:last-child');
+            const isExpanded = details.classList.contains('expanded');
+            
+            // Close all other expanded phases
+            document.querySelectorAll('.phase-details.expanded').forEach(d => {
+                if (d !== details) {
+                    d.classList.remove('expanded');
+                    d.parentElement.querySelector('.phase-toggle span:last-child').textContent = '↓';
+                }
+            });
+            
+            // Toggle current phase
+            if (isExpanded) {
+                details.classList.remove('expanded');
+                toggle.textContent = '↓';
+            } else {
+                details.classList.add('expanded');
+                toggle.textContent = '↑';
+            }
+        }
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mouse follow effect on phase cards
+        document.querySelectorAll('.phase-content').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (card.querySelector('::after')) {
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                }
+            });
+        });
+
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Keyboard navigation for accessibility
+        document.querySelectorAll('.phase-content').forEach(card => {
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    togglePhase(card);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
