@@ -3,6 +3,7 @@ date: 2026-05-05
 title: AI tools guide for developers
 description: A practical guide to free AI tools, effective prompting, and
   agentic coding workflows.
+tags: developers, ai, guide
 ---
 # AI Tools & Prompting Guide for Developers
 
