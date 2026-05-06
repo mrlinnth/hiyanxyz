@@ -1,0 +1,62 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import BackToPrev from "@components/BackToPrev.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import Link from "@components/Link.astro";
+import { readingTime } from "@lib/utils";
+
+export async function getStaticPaths() {
+  const resources = (await getCollection("resources"))
+    .filter((resource) => !resource.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  return resources.map((resource) => ({
+    params: { slug: resource.slug },
+    props: resource,
+  }));
+}
+
+type Props = CollectionEntry<"resources">;
+
+const resource = Astro.props;
+const { Content } = await resource.render();
+const isLink = resource.data.type === "link";
+const body = resource.body ?? "";
+---
+
+<PageLayout title={resource.data.title} description={resource.data.description}>
+  <Container>
+    <div class="animate">
+      <BackToPrev href="/resources">
+        Back to resources
+      </BackToPrev>
+    </div>
+
+    <div class="space-y-1 my-10">
+      <div class="animate flex items-center gap-1.5 text-sm opacity-75">
+        <FormattedDate date={resource.data.date} />
+        <span>&bull;</span>
+        <span>{readingTime(body)}</span>
+      </div>
+      <div class="animate text-2xl font-semibold text-black dark:text-white">
+        {resource.data.title}
+      </div>
+      <p class="animate max-w-prose opacity-75">
+        {resource.data.description}
+      </p>
+      {resource.data.url && (
+        <div class="animate pt-2">
+          <Link href={resource.data.url} external>
+            {resource.data.url}
+          </Link>
+        </div>
+      )}
+    </div>
+
+    <article class="animate space-y-4">
+      {!isLink && <Content />}
+    </article>
+  </Container>
+</PageLayout>

@@ -1,0 +1,55 @@
+name: Resource Suggestion
+description: Suggest a resource to add to hiyan.xyz/resources
+labels: ["resource-suggestion"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: e.g. Laravel Pint
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      placeholder: https://...
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - link
+        - snippet
+        - article
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - backend
+        - frontend
+        - productivity
+        - devops
+        - general
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Brief summary of what this resource is and why it is useful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
+      description: Anything else worth knowing - context, alternatives, caveats.

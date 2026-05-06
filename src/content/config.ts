@@ -11,6 +11,26 @@ const blog = defineCollection({
   }),
 });
 
+const resources = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    category: z.enum([
+      "backend",
+      "frontend",
+      "productivity",
+      "devops",
+      "general",
+    ]),
+    type: z.enum(["link", "snippet", "article"]),
+    url: z.string().url().optional(),
+    draft: z.boolean().optional(),
+    date: z.coerce.date(),
+    tags: z.string().optional(),
+  }),
+});
+
 const work = defineCollection({
   type: "content",
   schema: z.object({
@@ -33,4 +53,4 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { blog, work, projects };
+export const collections = { blog, work, projects, resources };

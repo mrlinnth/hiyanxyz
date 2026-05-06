@@ -1,0 +1,131 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import BackToPrev from "@components/BackToPrev.astro";
+import Link from "@components/Link.astro";
+
+const categories = ["backend", "frontend", "productivity", "devops", "general"] as const;
+
+const resources = (await getCollection("resources"))
+  .filter((resource) => !resource.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const displayUrl = (url?: string) => {
+  if (!url) {
+    return "";
+  }
+
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+};
+---
+
+<PageLayout title="Resources" description="A curated collection of links, snippets, and articles.">
+  <Container>
+    <div class="space-y-10">
+      <div class="animate space-y-4">
+        <BackToPrev href="/">
+          Back to home
+        </BackToPrev>
+        <div class="font-semibold text-black dark:text-white">
+          Resources
+        </div>
+        <p class="max-w-prose text-sm opacity-75">
+          Curated links, snippets, and articles collected by Yan.
+        </p>
+      </div>
+
+      <div class="animate flex flex-wrap gap-2" id="resource-filters">
+        <button data-category="all" class="resource-filter rounded border border-black/15 dark:border-white/20 px-3 py-1.5 text-sm">All</button>
+        {categories.map((category) => (
+          <button data-category={category} class="resource-filter rounded border border-black/15 dark:border-white/20 px-3 py-1.5 text-sm capitalize">
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <ul class="flex flex-col gap-4">
+        {resources.map((resource) => (
+          <li class="resource-item" data-category={resource.data.category}>
+            <article class="rounded-lg border border-black/15 dark:border-white/20 p-4 hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300 ease-in-out">
+              <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide opacity-75">
+                <span>{resource.data.category}</span>
+                <span>•</span>
+                <span>{resource.data.type}</span>
+                <span>•</span>
+                <span>{resource.data.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
+              </div>
+              <div class="mt-2">
+                {resource.data.type === "link" ? (
+                  <Link href={resource.data.url ?? `/${resource.collection}/${resource.slug}`} external={!!resource.data.url}>
+                    <div class="font-semibold text-black dark:text-white">
+                      {resource.data.title}
+                    </div>
+                  </Link>
+                ) : (
+                  <Link href={`/${resource.collection}/${resource.slug}`}>
+                    <div class="font-semibold text-black dark:text-white">
+                      {resource.data.title}
+                    </div>
+                  </Link>
+                )}
+              </div>
+              <p class="mt-1 text-sm opacity-75">
+                {resource.data.description}
+              </p>
+              <div class="mt-3 flex flex-wrap items-center gap-2 text-sm">
+                {resource.data.tags && (
+                  <span class="opacity-60">{resource.data.tags}</span>
+                )}
+                {resource.data.type === "article" && resource.data.url && (
+                  <>
+                    <span class="opacity-40">•</span>
+                    <Link href={resource.data.url} external>
+                      {displayUrl(resource.data.url)}
+                    </Link>
+                  </>
+                )}
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Container>
+</PageLayout>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll("button.resource-filter"));
+  const items = Array.from(document.querySelectorAll(".resource-item"));
+  const storageKey = "resources-category";
+
+  const setActive = (category: string) => {
+    buttons.forEach((button) => {
+      const active = (button as HTMLButtonElement).dataset.category === category;
+      button.toggleAttribute("aria-pressed", active);
+      button.classList.toggle("bg-black", active);
+      button.classList.toggle("text-white", active);
+    });
+
+    items.forEach((item) => {
+      const visible =
+        category === "all" || (item as HTMLElement).dataset.category === category;
+      item.classList.toggle("hidden", !visible);
+    });
+  };
+
+  const initial = sessionStorage.getItem(storageKey) ?? "all";
+  setActive(initial);
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const category = (button as HTMLButtonElement).dataset.category ?? "all";
+      sessionStorage.setItem(storageKey, category);
+      setActive(category);
+    });
+  });
+</script>

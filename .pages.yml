@@ -49,3 +49,44 @@ content:
        - name: body
          label: Body
          type: rich-text
+  - name: resources
+    label: Resources
+    type: collection
+    path: src/content/resources
+    view:
+      fields: [ title, date ]
+    fields:
+       - name: date
+         label: Date
+         type: date
+       - name: title
+         label: Title
+         type: string
+       - name: description
+         label: Description
+         type: string
+       - name: category
+         label: Category
+         type: select
+         options:
+           - backend
+           - frontend
+           - productivity
+           - devops
+           - general
+       - name: type
+         label: Type
+         type: select
+         options:
+           - link
+           - snippet
+           - article
+       - name: url
+         label: URL
+         type: string
+       - name: tags
+         label: Tags
+         type: string
+       - name: body
+         label: Body
+         type: rich-text
