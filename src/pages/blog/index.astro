@@ -8,21 +8,29 @@ import { BLOG } from "@consts";
 const data = (await getCollection("blog"))
   .filter(post => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  
+
 type Acc = {
   [year: string]: CollectionEntry<"blog">[];
 }
 
-const posts = data.reduce((acc: Acc, post) => {
-    const year = post.data.date.getFullYear().toString();
-    if (!acc[year]) {
-      acc[year] = [];
-    }
-    acc[year].push(post);
-    return acc;
-  }, {});
+const getTags = (post: CollectionEntry<"blog">): string[] => (
+  post.data.tags?.split(",").map((tag) => tag.trim()).filter(Boolean) ?? []
+);
 
-const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a)); 
+const tags = Array.from(
+  new Set(data.flatMap((post) => getTags(post))),
+).sort((a, b) => a.localeCompare(b));
+
+const posts = data.reduce((acc: Acc, post) => {
+  const year = post.data.date.getFullYear().toString();
+  if (!acc[year]) {
+    acc[year] = [];
+  }
+  acc[year].push(post);
+  return acc;
+}, {});
+
+const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
 ---
 
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
@@ -31,9 +39,19 @@ const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
       <div class="animate font-semibold text-black dark:text-white">
         Blog
       </div>
+      <div class="animate flex flex-wrap gap-2" id="blog-filters">
+        <button data-tag="all" class="blog-filter rounded border border-black/15 dark:border-white/20 px-3 py-1.5 text-sm">
+          All
+        </button>
+        {tags.map((tag) => (
+          <button data-tag={tag} class="blog-filter rounded border border-black/15 dark:border-white/20 px-3 py-1.5 text-sm capitalize">
+            {tag}
+          </button>
+        ))}
+      </div>
       <div class="space-y-4">
         {years.map(year => (
-          <section class="animate space-y-4">
+          <section class="animate space-y-4 blog-year" data-year={year}>
             <div class="font-semibold text-black dark:text-white">
               {year}
             </div>
@@ -41,8 +59,8 @@ const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
               <ul class="flex flex-col gap-4">
                 {
                   posts[year].map((post) => (
-                    <li>
-                      <ArrowCard entry={post}/>
+                    <li class="blog-item" data-tags={getTags(post).join(" ")}>
+                      <ArrowCard entry={post} />
                     </li>
                   ))
                 }
@@ -54,3 +72,9 @@ const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
     </div>
   </Container>
 </PageLayout>
+
+<script>
+  import { initBlogFilter } from "@scripts/blog-filter";
+
+  initBlogFilter();
+</script>
