@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Pulse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .p-wrap {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0c0b0e;
+      font-family: 'Outfit', sans-serif;
+      padding: 0;
+    }
+
+    @media (min-width: 520px) {
+      .p-wrap { padding: 32px; }
+    }
+
+    .p-device {
+      width: 100%;
+      max-width: 400px;
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #100f14;
+    }
+
+    @media (min-width: 520px) {
+      .p-device {
+        min-height: 780px;
+        max-height: 880px;
+        border-radius: 48px;
+        border: 1.5px solid rgba(255,255,255,0.06);
+        box-shadow:
+          0 0 0 5px #0c0b0e,
+          0 0 0 7px rgba(255,255,255,0.03),
+          0 48px 96px rgba(0,0,0,0.75),
+          0 16px 32px rgba(0,0,0,0.5);
+      }
+    }
+
+    .p-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 100% 55% at 30% 0%, rgba(92, 225, 230, 0.20) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 45% at 90% 100%, rgba(190, 132, 255, 0.12) 0%, transparent 70%);
+    }
+
+    .p-grain {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      border-radius: inherit;
+    }
+
+    .p-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 50%, rgba(0,0,0,0.55) 100%);
+      border-radius: inherit;
+    }
+
+    .p-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 52px 26px 40px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      position: relative;
+      z-index: 3;
+    }
+    .p-screen::-webkit-scrollbar { display: none; }
+
+    /* ---- Header ---- */
+    .p-header {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 44px;
+    }
+    .p-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.22em;
+      color: #e8a020;
+      line-height: 1;
+    }
+    .p-live {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: auto;
+      padding: 4px 10px;
+      border-radius: 99px;
+      border: 1px solid rgba(232,160,32,0.2);
+      background: rgba(232,160,32,0.07);
+    }
+    .p-live-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #e8a020;
+      animation: liveBlink 1.6s ease-in-out infinite;
+    }
+    @keyframes liveBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+    .p-live-text {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: #e8a020;
+      text-transform: uppercase;
+    }
+
+    /* ---- Question ---- */
+    .p-q-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      margin-bottom: 12px;
+    }
+    .p-q-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 38px;
+      line-height: 1.1;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      margin-bottom: 32px;
+    }
+
+    /* ---- Option cards ---- */
+    .p-options {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      flex: 1;
+    }
+
+    .p-card {
+      background: rgba(255,255,255,0.038);
+      border: 1.5px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 17px 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, transform 0.14s, box-shadow 0.18s;
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      opacity: 0;
+      animation: cardReveal 0.4s ease forwards;
+    }
+    .p-card:nth-child(1) { animation-delay: 0.05s; }
+    .p-card:nth-child(2) { animation-delay: 0.12s; }
+    .p-card:nth-child(3) { animation-delay: 0.19s; }
+    .p-card:nth-child(4) { animation-delay: 0.26s; }
+
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .p-card.votable:hover {
+      background: rgba(255,255,255,0.065);
+      border-color: rgba(255,255,255,0.13);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .p-card.votable:active { transform: scale(0.965); }
+
+    .p-card.p-selected {
+      background: rgba(232, 160, 32, 0.12);
+      border-color: rgba(232,160,32,0.4);
+      box-shadow: 0 0 0 1px rgba(232,160,32,0.15), 0 4px 24px rgba(232,160,32,0.08);
+    }
+    .p-card.p-anim {
+      animation: cardPop 0.32s ease forwards;
+    }
+    @keyframes cardPop {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(0.95); }
+      68%  { transform: scale(1.025); }
+      100% { transform: scale(1); }
+    }
+    .p-card.p-selected::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(232,160,32,0.07), transparent);
+      animation: shimmer 1.8s ease infinite;
+    }
+    @keyframes shimmer {
+      0%   { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    .p-card-emoji {
+      font-size: 32px;
+      flex-shrink: 0;
+      line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+    }
+    .p-card-body { flex: 1; min-width: 0; }
+    .p-card-label {
+      font-size: 17px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .p-card-sub {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.42);
+      margin-top: 4px;
+      font-style: italic;
+      letter-spacing: 0.01em;
+    }
+    .p-card-check {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 2px solid #e8a020;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #e8a020;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(232, 160, 32, 0.12);
+    }
+
+    /* ---- Hint ---- */
+    .p-hint {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.2);
+      margin-top: 22px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ---- Loading state ---- */
+    .p-loading {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .p-loading-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #e8a020;
+      animation: loadingPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes loadingPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.25; transform: scale(0.7); }
+    }
+    .p-loading-text {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+
+    /* ---- Error state ---- */
+    .p-error {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .p-error-text {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+
+    /* ---- Reaction overlay ---- */
+    .p-reaction {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 44px 30px;
+      background: rgba(12,11,14,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: inherit;
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      pointer-events: none;
+    }
+    .p-reaction.p-in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .p-r-emoji {
+      font-size: 72px;
+      margin-bottom: 24px;
+      animation: rEmojiIn 0.45s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+    }
+    @keyframes rEmojiIn {
+      from { transform: scale(0.3) rotate(-15deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .p-r-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #e8a020;
+      margin-bottom: 14px;
+      opacity: 0.85;
+    }
+    .p-r-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 0.06em;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .p-r-body {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.52);
+      text-align: center;
+      line-height: 1.75;
+      margin-bottom: 44px;
+      max-width: 300px;
+    }
+
+    .p-btn-loading {
+      width: 100%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+    }
+    .p-btn-loading-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #e8a020;
+      animation: loadingPulse 1.4s ease-in-out infinite;
+    }
+    .p-btn-loading-text {
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.1em;
+    }
+      width: 100%;
+      max-width: 300px;
+      padding: 18px;
+      border-radius: 16px;
+      border: none;
+      background: #e8a020;
+      color: #0c0b0e;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.12s, box-shadow 0.15s;
+      box-shadow: 0 8px 24px rgba(232,160,32,0.25);
+    }
+    .p-btn:hover { box-shadow: 0 12px 32px rgba(232,160,32,0.35); }
+    .p-btn:active { transform: scale(0.97); opacity: 0.85; }
+
+    /* ---- Results ---- */
+    .p-res-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      margin-bottom: 10px;
+    }
+    .p-res-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30px;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .p-res-item {
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: resItemIn 0.35s ease forwards;
+    }
+    .p-res-item:nth-child(1) { animation-delay: 0.05s; }
+    .p-res-item:nth-child(2) { animation-delay: 0.12s; }
+    .p-res-item:nth-child(3) { animation-delay: 0.19s; }
+    .p-res-item:nth-child(4) { animation-delay: 0.26s; }
+    @keyframes resItemIn {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .p-res-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .p-res-emoji { font-size: 20px; flex-shrink: 0; }
+    .p-res-label {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: -0.01em;
+    }
+    .p-res-label.mine { color: #e8a020; }
+    .p-res-stat {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+    .p-res-stat.mine { color: #e8a020; }
+
+    .p-bar-track {
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .p-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.16);
+      width: 0%;
+      transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .p-bar-fill.mine {
+      background: linear-gradient(90deg, #e8a02099, #e8a020);
+    }
+    .p-bar-fill.ready { width: var(--w); }
+
+    .p-footer {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 8px;
+    }
+    .p-total {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em;
+    }
+    .p-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.3);
+    }
+    .p-badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #e8a020;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="p-wrap">
+    <div class="p-device" id="device">
+      <div class="p-bg"></div>
+      <div class="p-grain"></div>
+      <div class="p-vignette"></div>
+      <div class="p-screen" id="screen">
+        <!-- Content rendered by JS -->
+      </div>
+      <div class="p-reaction" id="reaction">
+        <!-- Reaction overlay rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyiw_MMK9Q5G8pA_dMUQvoGB9T6gsSUIaL4-YpohO3j1NQruNf8UfIEzc0ZEYct6C-ANA/exec';
+    const SENTINEL = '__already_voted__';
+
+    // ---------------------------------------------------------------------------
+    // State
+    // ---------------------------------------------------------------------------
+
+    const state = {
+      phase: 'loading',       // 'loading' | 'voting' | 'reacted' | 'results' | 'error'
+      question: null,         // GET response: { question_id, title, prompt, cookie_key, options[] }
+      selectedId: null,       // string | null
+      resultOptions: null,    // POST response options[] with votes
+      animCard: null,         // string | null — card currently animating
+      reactionIn: false,
+      resultsIn: false,
+      errorMessage: null,
+      barsTriggered: false,
+      postPending: false,     // true while vote POST is still in-flight
+      postResolve: null,      // callback set by handleShowResults if tapped before POST completes
+    };
+
+    // ---------------------------------------------------------------------------
+    // Utilities
+    // ---------------------------------------------------------------------------
+
+    function getCookie(name) {
+      const m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return m ? m[2] : null;
+    }
+
+    function setCookie(name, value, days) {
+      days = days || 30;
+      const exp = new Date(Date.now() + days * 864e5).toUTCString();
+      document.cookie = name + '=' + value + '; expires=' + exp + '; path=/';
+    }
+
+    function generateCookieId() {
+      const arr = new Uint8Array(16);
+      crypto.getRandomValues(arr);
+      return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function el(id) {
+      return document.getElementById(id);
+    }
+
+    // ---------------------------------------------------------------------------
+    // API
+    // ---------------------------------------------------------------------------
+
+    function apiGet(questionId) {
+      return fetch(APPS_SCRIPT_URL + '?q=' + encodeURIComponent(questionId))
+        .then(function(r) { return r.json(); });
+    }
+
+    function apiPost(body) {
+      return fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(body),
+      }).then(function(r) { return r.json(); });
+    }
+
+    // ---------------------------------------------------------------------------
+    // Render helpers
+    // ---------------------------------------------------------------------------
+
+    function renderHeader() {
+      return '<div class="p-header">'
+        + '<span class="p-logo">The Pulse</span>'
+        + '<div class="p-live">'
+        + '<div class="p-live-dot"></div>'
+        + '<span class="p-live-text">Live</span>'
+        + '</div>'
+        + '</div>';
+    }
+
+    function renderLoading() {
+      el('screen').innerHTML = renderHeader()
+        + '<div class="p-loading">'
+        + '<div class="p-loading-dot"></div>'
+        + '<div class="p-loading-text">loading</div>'
+        + '</div>';
+      el('reaction').className = 'p-reaction';
+      el('reaction').innerHTML = '';
+    }
+
+    function renderError(msg) {
+      el('screen').innerHTML = renderHeader()
+        + '<div class="p-error">'
+        + '<div class="p-error-text">' + escapeHtml(msg) + '</div>'
+        + '</div>';
+      el('reaction').className = 'p-reaction';
+      el('reaction').innerHTML = '';
+    }
+
+    function renderVoting() {
+      const q = state.question;
+      let html = renderHeader();
+      html += '<div class="p-q-tag">This week\'s question</div>';
+      html += '<div class="p-q-text">' + escapeHtml(q.prompt) + '</div>';
+      html += '<div class="p-options">';
+      q.options.forEach(function(opt) {
+        const isSelected = state.selectedId === opt.id;
+        const isAnim = state.animCard === opt.id;
+        let cls = 'p-card';
+        if (state.phase === 'voting') cls += ' votable';
+        if (isAnim) cls += ' p-anim';
+        if (isSelected) cls += ' p-selected';
+
+        html += '<div class="' + cls + '" data-id="' + escapeAttr(opt.id) + '">';
+        html += '<div class="p-card-emoji">' + opt.emoji + '</div>';
+        html += '<div class="p-card-body">';
+        html += '<div class="p-card-label">' + escapeHtml(opt.label) + '</div>';
+        html += '<div class="p-card-sub">' + escapeHtml(opt.subtext) + '</div>';
+        html += '</div>';
+        if (isSelected) {
+          html += '<div class="p-card-check">&#10003;</div>';
+        }
+        html += '</div>';
+      });
+      html += '</div>';
+      if (state.phase === 'voting') {
+        html += '<div class="p-hint">anonymous &middot; tap to cast your vote</div>';
+      }
+
+      el('screen').innerHTML = html;
+      el('reaction').className = 'p-reaction';
+      el('reaction').innerHTML = '';
+
+      // Bind vote handlers
+      el('screen').querySelectorAll('.p-card.votable').forEach(function(card) {
+        card.addEventListener('click', function() {
+          handleVote(card.dataset.id);
+        });
+      });
+    }
+
+    function renderReaction() {
+      const opt = state.question.options.find(function(o) {
+        return o.id === state.selectedId;
+      });
+      if (!opt) return;
+
+      el('reaction').innerHTML =
+        '<div class="p-r-emoji">' + opt.emoji + '</div>'
+        + '<div class="p-r-tag">You picked ' + escapeHtml(opt.label) + '</div>'
+        + '<div class="p-r-title">' + escapeHtml(opt.reaction_title) + '</div>'
+        + '<div class="p-r-body">' + escapeHtml(opt.reaction_body) + '</div>'
+        + '<button class="p-btn" id="showResultsBtn">Show Results</button>';
+
+      el('reaction').className = 'p-reaction';
+
+      // Trigger the transition in on next frame
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          if (state.reactionIn) {
+            el('reaction').classList.add('p-in');
+          }
+        });
+      });
+
+      document.getElementById('showResultsBtn').addEventListener('click', handleShowResults);
+    }
+
+    function renderResults() {
+      const opts = state.resultOptions;
+      const total = opts.reduce(function(sum, o) { return sum + (o.votes || 0); }, 0);
+
+      let html = renderHeader();
+      html += '<div class="p-res-tag">Results</div>';
+      html += '<div class="p-res-title">' + escapeHtml(state.question.prompt) + '</div>';
+
+      opts.forEach(function(opt) {
+        const count = opt.votes || 0;
+        const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+        const isMine = state.selectedId === opt.id;
+        const labelCls = 'p-res-label' + (isMine ? ' mine' : '');
+        const statCls = 'p-res-stat' + (isMine ? ' mine' : '');
+        const barCls = 'p-bar-fill' + (isMine ? ' mine' : '') + (state.resultsIn ? ' ready' : '');
+
+        html += '<div class="p-res-item">';
+        html += '<div class="p-res-row">';
+        html += '<div class="p-res-emoji">' + opt.emoji + '</div>';
+        html += '<div class="' + labelCls + '">' + escapeHtml(opt.label) + (isMine ? ' \u2190 you' : '') + '</div>';
+        html += '<div class="' + statCls + '">' + pct + '% \u00b7 ' + count + '</div>';
+        html += '</div>';
+        html += '<div class="p-bar-track">';
+        html += '<div class="' + barCls + '" style="--w: ' + pct + '%"></div>';
+        html += '</div>';
+        html += '</div>';
+      });
+
+      html += '<div class="p-footer">';
+      html += '<div class="p-total">' + total + ' votes cast</div>';
+      html += '<div class="p-badge"><div class="p-badge-dot"></div>your vote is in</div>';
+      html += '</div>';
+
+      el('screen').innerHTML = html;
+      el('reaction').className = 'p-reaction';
+      el('reaction').innerHTML = '';
+
+      // Trigger bar animations after a short delay
+      if (!state.barsTriggered) {
+        state.barsTriggered = true;
+        setTimeout(function() {
+          state.resultsIn = true;
+          el('screen').querySelectorAll('.p-bar-fill').forEach(function(bar) {
+            bar.classList.add('ready');
+          });
+        }, 80);
+      }
+    }
+
+    function render() {
+      switch (state.phase) {
+        case 'loading':  renderLoading(); break;
+        case 'voting':   renderVoting();  break;
+        case 'reacted':  renderVoting();  renderReaction(); break;
+        case 'results':  renderResults(); break;
+        case 'error':    renderError(state.errorMessage || 'Something went wrong'); break;
+      }
+    }
+
+    // ---------------------------------------------------------------------------
+    // Escape helpers
+    // ---------------------------------------------------------------------------
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escapeAttr(str) {
+      if (str == null) return '';
+      return String(str).replace(/"/g, '&quot;');
+    }
+
+    // ---------------------------------------------------------------------------
+    // Event handlers
+    // ---------------------------------------------------------------------------
+
+    function handleVote(optionId) {
+      if (state.phase !== 'voting') return;
+
+      // 1. Animate the selected card
+      state.animCard = optionId;
+      render();
+
+      setTimeout(function() {
+        const cookieId = generateCookieId();
+        state.animCard = null;
+        state.selectedId = optionId;
+
+        // 2. Show reaction immediately using local GET data — no network wait
+        state.phase = 'reacted';
+        state.reactionIn = false;
+        state.postPending = true;
+        state.postResolve = null;
+        render();
+
+        setTimeout(function() {
+          state.reactionIn = true;
+          if (el('reaction')) el('reaction').classList.add('p-in');
+        }, 60);
+
+        // 3. Fire POST in background
+        apiPost({
+          question_id: state.question.question_id,
+          option_id: optionId,
+          cookie_id: cookieId,
+        }).then(function(data) {
+          if (data.error) {
+            state.postPending = false;
+            state.phase = 'error';
+            state.errorMessage = data.error;
+            render();
+            return;
+          }
+
+          setCookie(data.cookie_key, optionId, 30);
+          state.resultOptions = data.options;
+          state.postPending = false;
+
+          // If user already tapped "Show Results", resolve now
+          if (state.postResolve) {
+            state.postResolve();
+            state.postResolve = null;
+          }
+        }).catch(function() {
+          state.postPending = false;
+          // If user is waiting on results, surface the error
+          if (state.postResolve) {
+            state.postResolve = null;
+            state.phase = 'error';
+            state.errorMessage = 'Could not submit your vote. Please try again.';
+            render();
+          }
+        });
+      }, 320);
+    }
+
+    function handleShowResults() {
+      if (state.postPending) {
+        // POST still in-flight — swap button to loading indicator and wait
+        var btn = document.getElementById('showResultsBtn');
+        if (btn) {
+          btn.outerHTML = '<div class="p-btn-loading">'
+            + '<div class="p-btn-loading-dot"></div>'
+            + '<div class="p-btn-loading-text">tallying votes</div>'
+            + '</div>';
+        }
+        state.postResolve = transitionToResults;
+        return;
+      }
+      transitionToResults();
+    }
+
+    function transitionToResults() {
+      state.reactionIn = false;
+      if (el('reaction')) el('reaction').classList.remove('p-in');
+      setTimeout(function() {
+        state.phase = 'results';
+        state.barsTriggered = false;
+        state.resultsIn = false;
+        render();
+      }, 260);
+    }
+
+    // ---------------------------------------------------------------------------
+    // Mount — on-load flow
+    // ---------------------------------------------------------------------------
+
+    (function mount() {
+      state.phase = 'loading';
+      render();
+
+      const params = new URLSearchParams(window.location.search);
+      const questionId = params.get('q');
+
+      if (!questionId) {
+        state.phase = 'error';
+        state.errorMessage = 'No question ID in URL';
+        render();
+        return;
+      }
+
+      apiGet(questionId).then(function(data) {
+        if (data.error) {
+          state.phase = 'error';
+          state.errorMessage = data.error;
+          render();
+          return;
+        }
+
+        state.question = data;
+
+        const existingVote = getCookie(data.cookie_key);
+
+        if (existingVote) {
+          // Already voted — POST sentinel to get current results
+          state.selectedId = existingVote;
+          apiPost({
+            question_id: data.question_id,
+            option_id: SENTINEL,
+            cookie_id: 'sentinel',
+          }).then(function(postData) {
+            if (postData.error) {
+              state.phase = 'error';
+              state.errorMessage = postData.error;
+              render();
+              return;
+            }
+            state.resultOptions = postData.options;
+            state.phase = 'results';
+            state.barsTriggered = false;
+            state.resultsIn = false;
+            render();
+          }).catch(function() {
+            state.phase = 'error';
+            state.errorMessage = 'Could not load results. Please try again.';
+            render();
+          });
+        } else {
+          state.phase = 'voting';
+          render();
+        }
+
+      }).catch(function() {
+        state.phase = 'error';
+        state.errorMessage = 'Could not load the question. Please try again.';
+        render();
+      });
+    })();
+  </script>
+
+</body>
+</html>
